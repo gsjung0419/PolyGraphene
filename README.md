@@ -14,8 +14,8 @@ Lammps input is “relax.in"
 D. There are some redundant files in the src. The main stuff is in “main.cpp” and “grain.cpp”
 
 E. The example is for 6nm randomly distributed grains. 
-rg6i.pdb is the initial geometry before refinement
-rg6e.pdb is the final geometry after refinement
+rg6i.pdb is the initial geometry before refinement.
+rg6e.pdb is the final geometry after refinement.
 
 The code was not designed for the public use. (minimum comments without checking errors)
 
