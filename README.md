@@ -1,5 +1,6 @@
 # PolyGraphene
 Generation of polycrystalline graphene models
+
 A. Libraries should be prepared. The path are described in the makefile
 1. fftw 2.voro++ 3. lammps 
 
