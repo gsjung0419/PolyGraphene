@@ -1,0 +1,51 @@
+units       	 metal
+dimension   	 3
+boundary    	 p p p
+atom_style  	 charge
+processors       * * 1
+read_data	 grained.data
+
+################# Force Field type ###############################
+pair_style  	 airebo 2.5 0 0 
+pair_coeff  	 * * CH.airebo C H
+timestep    	 0.0002
+mass 		 1 12.0
+mass 		 2 1.0
+
+################# SETUP VARIABLE ##################################
+variable 	 dmax equal 1e-3
+variable         outstep equal 100
+variable         cfgstep equal 5000
+variable         vmdstep equal 100
+variable	 deformstep equal 100
+variable	 mtemp equal 300.0 ####set temperature
+variable	 mpres equal 0.0  ####set pressure
+
+################# REMOVE RESIDUAL STRESS ##########################
+min_style        cg
+min_modify	     dmax ${dmax} line quadratic
+minimize         0.0 1.0e-10 100000 10
+
+################# THERMO SETTING ###################################
+thermo      	 ${outstep}
+thermo_style	 custom step time temp press
+
+################# ENSEMBLE ####################################
+fix              integration all nve/limit 0.01
+
+neighbor         2.0 bin
+neigh_modify     every 1 check yes
+
+################# DEFORM SETTING ###################################
+fix              integration all  nve/limit 0.01
+fix		 therm all langevin 100.0 100.0 0.01 699483
+
+run              500
+
+dump             2 all xyz 1 grained.xyz
+dump_modify      2 element C H
+run              1
+
+#write_restart   nvt.restart
+
+
